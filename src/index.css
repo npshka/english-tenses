@@ -149,3 +149,38 @@
   color: #858092;
   font-size: 12px;
 }
+
+
+/* Larger color key directly above the tense formula */
+.formula-legend {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin: 0 0 12px;
+}
+.formula-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #716b7d;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.4;
+}
+.formula-legend i,
+.formula-legend b {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  flex: none;
+  border-radius: 3px;
+  background: #a89acb;
+}
+.formula-legend b {
+  background: #d9bd7e;
+}
+@media(max-width:760px) {
+  .formula-legend { gap: 12px; margin-bottom: 11px; }
+  .formula-legend span { font-size: 11px; }
+}
