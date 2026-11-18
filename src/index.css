@@ -276,3 +276,14 @@
 .simple-visual .event-flag{z-index:3}
 .simple-visual.repeated-events .event-flag{top:12px}
 @media(max-width:760px){.simple-examples{grid-template-columns:1fr 1fr}.simple-examples button{padding:8px}.simple-examples button b{font-size:8px}}
+
+/* Keep example pickers vertical and timeline elements inside their cards */
+.simple-examples{grid-template-columns:1fr}
+@media(max-width:760px){.simple-examples{grid-template-columns:1fr}}
+.process-visual{height:66px;display:block;overflow:hidden;margin:18px 0 12px}
+.process-visual:before{left:3%;right:3%;top:36px;width:auto;height:2px;background:#d5d1da}
+.process-visual .process-range{position:absolute;top:34px;height:6px;max-width:94%;border-radius:6px;background:#bdb3dd;z-index:1}
+.process-visual .process-focus{position:absolute;top:17px;width:2px;height:36px;border:0;border-radius:0;background:#8878b6;transform:translateX(-50%);z-index:2}
+.process-visual .process-focus:after{content:'';position:absolute;left:-3px;top:-2px;width:8px;height:8px;border-radius:50%;background:#8878b6}
+.process-visual .process-focus-label{position:absolute;top:2px;transform:translateX(-50%);white-space:nowrap;font:700 7px Manrope,sans-serif;letter-spacing:.7px;color:#7a6aa6}
+.process-visual>span.process-range{width:auto}
