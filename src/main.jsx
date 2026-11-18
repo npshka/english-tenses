@@ -140,6 +140,7 @@ const tenseDetails = {
 function App() {
   const [active, setActive] = useState('intro')
   const [conceptPage, setConceptPage] = useState(0)
+  const [simplePattern, setSimplePattern] = useState('regular')
   const [mobileOpen, setMobileOpen] = useState(false)
   const [time, setTime] = useState('Past')
   const [aspect, setAspect] = useState('Continuous')
@@ -228,7 +229,16 @@ function App() {
         <div className={`concept-part ${conceptPage === 1 ? "concept-part-active" : ""}`} id="view">
           <div className="section-heading"><div className="section-kicker">ЧАСТЬ 2 · ВЗГЛЯД НА ДЕЙСТВИЕ</div><h2>Как мы рассматриваем <em>действие?</em></h2><p>Одно и то же событие можно представить как факт или показать изнутри — как процесс.</p></div>
           <div className="view-grid">
-            <article className="view-card"><div className="view-card-label">01 / ФАКТ ИЛИ СОБЫТИЕ</div><h3>Simple</h3><p>Действие рассматривается целиком: как факт, привычка, повторение или отдельное событие. Акцент не на том, как долго оно длилось.</p><div className="mini-visual simple-visual"><i/><span/><i/></div><div className="view-example"><b>I work every day.</b><span>Я работаю каждый день.</span></div></article>
+            <article className="view-card"><div className="view-card-label">01 / ФАКТ ИЛИ СОБЫТИЕ</div><h3>Simple</h3><p>Действие рассматривается целиком: как факт, привычка, повторение или отдельное событие. Акцент не на том, как долго оно длилось.</p><div className="simple-choice" role="group" aria-label="Характер действия">
+                <button type="button" className={simplePattern === 'single' ? 'active' : ''} onClick={() => setSimplePattern('single')}>Разовое действие</button>
+                <button type="button" className={simplePattern === 'regular' ? 'active' : ''} onClick={() => setSimplePattern('regular')}>Регулярное действие</button>
+              </div>
+              <div className={'mini-visual simple-visual ' + (simplePattern === 'single' ? 'single-event' : 'repeated-events')} aria-label={simplePattern === 'single' ? 'Одно событие на временной линии' : 'Повторяющиеся события на временной линии'}>
+                <span className="simple-axis"/>
+                {simplePattern === 'single' ? <i className="event-flag"/> : <>{[12,31,50,69,88].map((pos) => <i key={pos} className="event-flag" style={{left: pos + '%'}}/>)}</>}
+              </div>
+              <div className="view-example"><b>{simplePattern === 'single' ? 'I visited London last year.' : 'I work every day.'}</b><span>{simplePattern === 'single' ? 'Я посетил(а) Лондон в прошлом году.' : 'Я работаю каждый день.'}</span></div>
+              <p className="simple-pattern-note">{simplePattern === 'single' ? 'Один флажок — одно событие, представленное как целый факт.' : 'Несколько флажков — действие повторяется регулярно, но каждое повторение всё равно рассматривается как факт.'}</p></article>
             <article className="view-card continuous-card"><div className="view-card-label">02 / ПРОЦЕСС</div><h3>Continuous</h3><p>Действие показывается в процессе протекания. Мы словно смотрим на него в определённый момент или период.</p><div className="mini-visual process-visual"><span/><i/></div><div className="view-example"><b>I am working now.</b><span>Я сейчас работаю.</span></div></article>
           </div>
           <div className="grammar-note"><b>✳</b><p><strong>Важно:</strong> Simple не означает только «один раз». В Simple действие может повторяться регулярно. Главное — мы не выделяем его протекание как процесс.</p></div>
