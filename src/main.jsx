@@ -146,9 +146,11 @@ function App() {
   const [aspect, setAspect] = useState('Continuous')
   const [perfect, setPerfect] = useState(false)
   const [selectedTense, setSelectedTense] = useState(null)
+  const [detailOrigin, setDetailOrigin] = useState('tenses')
   const [verb, setVerb] = useState('work')
   const [subject, setSubject] = useState('I')
-  const openTense = (name) => { setSelectedTense(name); window.scrollTo({ top: 0, behavior: 'smooth' }) }
+  const openTense = (name) => { setDetailOrigin(active); setSelectedTense(name); window.scrollTo({ top: 0, behavior: 'smooth' }) }
+  const closeTense = () => { setSelectedTense(null); setActive(detailOrigin); window.scrollTo({ top: 0, behavior: 'smooth' }) }
   const goTo = (id) => {
     setActive(id); setMobileOpen(false); setSelectedTense(null)
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -217,7 +219,7 @@ function App() {
             <div className="control-group"><label>02 · ВЗГЛЯД НА ДЕЙСТВИЕ</label><div className="segmented two">{['Simple','Continuous'].map(v => <button key={v} className={aspect === v ? 'active' : ''} onClick={() => setAspect(v)}>{v}</button>)}</div></div>
             <button className={'perfect-toggle ' + (perfect ? 'on' : '')} onClick={() => setPerfect(!perfect)}><span className="toggle-box">{perfect && <Check size={13}/>}</span><span><b>Добавить Perfect</b><small>Действие предшествует моменту отсчёта</small></span><i>{perfect ? 'ON' : 'OFF'}</i></button>
             <div className="control-group"><label>03 · СМЫСЛОВОЙ ГЛАГОЛ</label><input className="verb-input" value={verb} onChange={e => setVerb(e.target.value.replace(/[^a-zA-Z]/g, ''))} aria-label="Начальная форма глагола" placeholder="Например, work"/><div className="subject-picker"><span>Подлежащее</span><select value={subject} onChange={e => setSubject(e.target.value)}><option>I</option><option>You</option><option>He</option><option>She</option><option>It</option><option>We</option><option>They</option></select></div></div>
-          </div><div className="builder-result"><span className="result-eyebrow">ПОЛУЧИВШАЯСЯ КОНСТРУКЦИЯ</span><h3>{result[2]}</h3><div className="formula-box"><strong>{result[0]}</strong>{result[1] && <><i>+</i><b>{result[1]}</b></>}</div><div className="live-verb"><span>КАК МЕНЯЕТСЯ ГЛАГОЛ</span><strong key={sampleSentence} className="verb-animation">{sampleSentence}</strong><small>Форма обновляется при изменении времени, аспекта, Perfect или подлежащего.</small></div><p>{perfect ? 'Perfect добавляет связь с более поздним моментом отсчёта.' : aspect === 'Continuous' ? 'Continuous показывает действие в процессе и использует форму BE + V-ing.' : 'Simple представляет действие как факт, привычку или целое событие.'}</p><div className="legend"><span><i/> вспомогательная часть</span><span><b/> смысловой глагол</span></div></div></div>
+          </div><div className="builder-result"><span className="result-eyebrow">ПОЛУЧИВШАЯСЯ КОНСТРУКЦИЯ</span><h3>{result[2]}</h3><div className="formula-box"><strong>{result[0]}</strong>{result[1] && <><i>+</i><b>{result[1]}</b></>}</div><div className="live-verb"><span>КАК МЕНЯЕТСЯ ГЛАГОЛ</span><strong key={sampleSentence} className="verb-animation">{sampleSentence}</strong><small>Форма обновляется при изменении времени, аспекта, Perfect или подлежащего.</small></div><p>{perfect ? 'Perfect добавляет связь с более поздним моментом отсчёта.' : aspect === 'Continuous' ? 'Continuous показывает действие в процессе и использует форму BE + V-ing.' : 'Simple представляет действие как факт, привычку или целое событие.'}</p><div className="legend"><span><i/> вспомогательная часть</span><span><b/> смысловой глагол</span></div><button className="detail-link builder-detail-link" onClick={() => openTense(result[2])}>Прочитать подробнее <span>→</span></button></div></div>
           <div className="next-chapter"><div><span>СЛЕДУЮЩИЙ ЭТАП</span><h3>12 времён английского языка</h3><p>Теперь можно разобрать каждую конструкцию отдельно — от смысла до готовой формулы.</p></div><BookOpen size={28}/></div>
         </section>
 
@@ -259,7 +261,7 @@ function App() {
         </section>
 
         {selectedTense && <div className="detail-page">
-          <div className="detail-topline"><button className="back-link" onClick={() => setSelectedTense(null)}>← Назад к 12 временам</button><span>СПРАВОЧНИК · {Object.keys(tenseDetails).indexOf(selectedTense)+1} / 12</span></div>
+          <div className="detail-topline"><button className="back-link" onClick={closeTense}>← Назад</button><span>СПРАВОЧНИК · {Object.keys(tenseDetails).indexOf(selectedTense)+1} / 12</span></div>
           <div className="detail-hero"><div className="section-kicker">ПОДРОБНОЕ ОБЪЯСНЕНИЕ</div><h1>{selectedTense}</h1><p>{tenseDetails[selectedTense][3]}</p></div>
           <div className="detail-content">
             <section className="detail-block"><div className="section-kicker">01 · КАК ОБРАЗУЕТСЯ</div><h2>Формы предложения</h2><div className="detail-form-grid"><article><small>УТВЕРЖДЕНИЕ</small><strong>{selectedTense === 'Past Simple' ? 'Subject + V2' : selectedTense === 'Present Simple' ? 'Subject + V1 / V1+s' : selectedTense.startsWith('Future') ? 'Subject + '+tenseDetails[selectedTense][0] : 'Subject + '+tenseDetails[selectedTense][0]}</strong></article><article><small>ОТРИЦАНИЕ</small><strong>{tenseDetails[selectedTense][1]}</strong></article><article><small>ВОПРОС</small><strong>{tenseDetails[selectedTense][2]}</strong></article></div><p className="detail-note">В английском языке вспомогательный глагол принимает на себя грамматическую работу: помогает образовать вопрос и отрицание, а смысловой глагол сохраняет нужную форму.</p></section>
