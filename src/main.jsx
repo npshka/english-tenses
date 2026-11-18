@@ -146,11 +146,23 @@ function App() {
   const [aspect, setAspect] = useState('Continuous')
   const [perfect, setPerfect] = useState(false)
   const [selectedTense, setSelectedTense] = useState(null)
+  const [verb, setVerb] = useState('work')
+  const [subject, setSubject] = useState('I')
   const openTense = (name) => { setSelectedTense(name); window.scrollTo({ top: 0, behavior: 'smooth' }) }
   const goTo = (id) => {
-    setActive(id); setMobileOpen(false)
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    setActive(id); setMobileOpen(false); setSelectedTense(null)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+  const irregular = { go:['went','gone'], eat:['ate','eaten'], see:['saw','seen'], write:['wrote','written'], do:['did','done'], have:['had','had'], make:['made','made'], take:['took','taken'], read:['read','read'], come:['came','come'], buy:['bought','bought'], speak:['spoke','spoken'], be:['was / were','been'] }
+  const baseVerb = verb.trim().toLowerCase() || 'work'
+  const pastVerb = irregular[baseVerb]?.[0] || (baseVerb.endsWith('e') ? baseVerb + 'd' : baseVerb.endsWith('y') && !/[aeiou]y$/.test(baseVerb) ? baseVerb.slice(0,-1)+'ied' : baseVerb + 'ed')
+  const thirdVerb = irregular[baseVerb]?.[1] || (baseVerb.endsWith('e') ? baseVerb + 'd' : baseVerb.endsWith('y') && !/[aeiou]y$/.test(baseVerb) ? baseVerb.slice(0,-1)+'ied' : baseVerb + 'ed')
+  const ingVerb = baseVerb.endsWith('ie') ? baseVerb.slice(0,-2)+'ying' : baseVerb.endsWith('e') && !baseVerb.endsWith('ee') ? baseVerb.slice(0,-1)+'ing' : baseVerb+'ing'
+  const thirdPerson = /(?:s|sh|ch|x|z|o)$/.test(baseVerb) ? baseVerb+'es' : baseVerb.endsWith('y') && !/[aeiou]y$/.test(baseVerb) ? baseVerb.slice(0,-1)+'ies' : baseVerb+'s'
+  const beForm = time === 'Past' ? (['I','He','She','It'].includes(subject) ? 'was' : 'were') : (subject === 'I' ? 'am' : ['He','She','It'].includes(subject) ? 'is' : 'are')
+  const haveForm = ['He','She','It'].includes(subject) ? 'has' : 'have'
+  const conjugated = perfect ? (aspect === 'Continuous' ? `${time === 'Past' ? 'had' : time === 'Future' ? 'will have' : haveForm} been ${ingVerb}` : `${time === 'Past' ? 'had' : time === 'Future' ? 'will have' : haveForm} ${thirdVerb}`) : aspect === 'Continuous' ? `${time === 'Future' ? 'will be' : beForm} ${ingVerb}` : time === 'Past' ? pastVerb : time === 'Future' ? `will ${baseVerb}` : ['He','She','It'].includes(subject) ? thirdPerson : baseVerb
+  const sampleSentence = `${subject} ${conjugated}.`
   function formula() {
     if (perfect && aspect === 'Continuous') return time === 'Past' ? ['had been', 'V-ing', 'Past Perfect Continuous'] : time === 'Present' ? ['have / has been', 'V-ing', 'Present Perfect Continuous'] : ['will have been', 'V-ing', 'Future Perfect Continuous']
     if (perfect) return time === 'Past' ? ['had', 'V3', 'Past Perfect'] : time === 'Present' ? ['have / has', 'V3', 'Present Perfect'] : ['will have', 'V3', 'Future Perfect']
@@ -170,7 +182,7 @@ function App() {
         <div className="sidebar-note"><Sparkles size={16}/><p>Понимай систему, а не заучивай 12 формул.</p></div>
         <div className="sidebar-footer">ENGLISH GRAMMAR · 2026</div>
       </aside>
-      <main className="content">
+      <main className="content" data-active={active}>
         <section className="hero-section" id="intro">
           <div className="eyebrow"><i/> ИНТЕРАКТИВНЫЙ УЧЕБНИК</div>
           <div className="hero-grid">
@@ -204,7 +216,8 @@ function App() {
             <div className="control-group"><label>01 · ВРЕМЕННОЙ ОРИЕНТИР</label><div className="segmented">{['Past','Present','Future'].map(v => <button key={v} className={time === v ? 'active' : ''} onClick={() => setTime(v)}>{v}</button>)}</div></div>
             <div className="control-group"><label>02 · ВЗГЛЯД НА ДЕЙСТВИЕ</label><div className="segmented two">{['Simple','Continuous'].map(v => <button key={v} className={aspect === v ? 'active' : ''} onClick={() => setAspect(v)}>{v}</button>)}</div></div>
             <button className={'perfect-toggle ' + (perfect ? 'on' : '')} onClick={() => setPerfect(!perfect)}><span className="toggle-box">{perfect && <Check size={13}/>}</span><span><b>Добавить Perfect</b><small>Действие предшествует моменту отсчёта</small></span><i>{perfect ? 'ON' : 'OFF'}</i></button>
-          </div><div className="builder-result"><span className="result-eyebrow">ПОЛУЧИВШАЯСЯ КОНСТРУКЦИЯ</span><h3>{result[2]}</h3><div className="formula-box"><strong>{result[0]}</strong>{result[1] && <><i>+</i><b>{result[1]}</b></>}</div><p>{perfect ? 'Perfect добавляет связь с более поздним моментом отсчёта.' : aspect === 'Continuous' ? 'Continuous показывает действие в процессе и использует форму BE + V-ing.' : 'Simple представляет действие как факт, привычку или целое событие.'}</p><div className="legend"><span><i/> вспомогательная часть</span><span><b/> смысловой глагол</span></div></div></div>
+            <div className="control-group"><label>03 · СМЫСЛОВОЙ ГЛАГОЛ</label><input className="verb-input" value={verb} onChange={e => setVerb(e.target.value.replace(/[^a-zA-Z]/g, ''))} aria-label="Начальная форма глагола" placeholder="Например, work"/><div className="subject-picker"><span>Подлежащее</span><select value={subject} onChange={e => setSubject(e.target.value)}><option>I</option><option>You</option><option>He</option><option>She</option><option>It</option><option>We</option><option>They</option></select></div></div>
+          </div><div className="builder-result"><span className="result-eyebrow">ПОЛУЧИВШАЯСЯ КОНСТРУКЦИЯ</span><h3>{result[2]}</h3><div className="formula-box"><strong>{result[0]}</strong>{result[1] && <><i>+</i><b>{result[1]}</b></>}</div><div className="live-verb"><span>КАК МЕНЯЕТСЯ ГЛАГОЛ</span><strong key={sampleSentence} className="verb-animation">{sampleSentence}</strong><small>Форма обновляется при изменении времени, аспекта, Perfect или подлежащего.</small></div><p>{perfect ? 'Perfect добавляет связь с более поздним моментом отсчёта.' : aspect === 'Continuous' ? 'Continuous показывает действие в процессе и использует форму BE + V-ing.' : 'Simple представляет действие как факт, привычку или целое событие.'}</p><div className="legend"><span><i/> вспомогательная часть</span><span><b/> смысловой глагол</span></div></div></div>
           <div className="next-chapter"><div><span>СЛЕДУЮЩИЙ ЭТАП</span><h3>12 времён английского языка</h3><p>Теперь можно разобрать каждую конструкцию отдельно — от смысла до готовой формулы.</p></div><BookOpen size={28}/></div>
         </section>
 
@@ -256,6 +269,7 @@ function App() {
           </div>
         </div>}
         <footer className="footer"><a className="brand" href="#intro"><span className="brand-mark"><BookOpen size={16}/></span>english<span className="brand-light">tenses</span></a><span>Учимся понимать, а не заучивать.</span><span>© 2026</span></footer>
+        <div className="page-navigation"><button onClick={() => goTo(chapters[Math.max(0, chapters.findIndex(c => c[0] === active)-1)][0])} disabled={active === 'intro'}>← Назад</button><span>{String(chapters.findIndex(c => c[0] === active)+1).padStart(2,'0')} / 06</span><button onClick={() => goTo(chapters[Math.min(chapters.length-1, chapters.findIndex(c => c[0] === active)+1)][0])} disabled={active === 'tenses'}>Далее <ArrowRight size={15}/></button></div>
       </main>
     </div>
   </div>
