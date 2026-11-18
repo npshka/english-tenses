@@ -5,11 +5,9 @@ import './index.css'
 
 const chapters = [
   ['intro', '01', 'Как устроена система', 'Сначала логика — потом формулы'],
-  ['time', '02', 'Когда происходит действие', 'Past · Present · Future'],
-  ['view', '03', 'Как мы видим действие', 'Simple · Continuous'],
-  ['perfect', '04', 'Что такое Perfect', 'Связь с моментом отсчёта'],
-  ['builder', '05', 'Собираем формулу', 'Соединяем характеристики'],
-  ['tenses', '06', '12 английских времён', 'Полный справочник'],
+  ['builder', '02', 'Собираем формулу', 'Соединяем характеристики'],
+  ['concepts', '03', 'Три характеристики действия', 'Время · аспект · Perfect'],
+  ['tenses', '04', '12 английских времён', 'Полный справочник'],
 ]
 const periods = {
   Past: { ru: 'Прошлое', desc: 'Действие или ситуация относится к периоду до настоящего момента.', color: 'rose', example: 'Yesterday, I read a book.' },
@@ -197,44 +195,48 @@ function App() {
         <section className="hero-section" id="intro">
           <div className="eyebrow"><i/> ИНТЕРАКТИВНЫЙ УЧЕБНИК</div>
           <div className="hero-grid">
-            <div className="hero-copy"><h1>Времена английского.<br/><em>Без зубрёжки.</em></h1><p className="hero-lead">12 времён — это не 12 несвязанных правил. Это система, которую можно понять, если разобрать её на несколько простых характеристик.</p><button className="primary-button" onClick={() => goTo('time')}>Начать разбираться <ArrowRight size={17}/></button></div>
+            <div className="hero-copy"><h1>Времена английского.<br/><em>Без зубрёжки.</em></h1><p className="hero-lead">12 времён — это не 12 несвязанных правил. Это система, которую можно понять, если разобрать её на несколько простых характеристик.</p><button className="primary-button" onClick={() => goTo('builder')}>Начать разбираться <ArrowRight size={17}/></button></div>
             <div className="hero-art"><div className="orbit orbit-one"/><div className="orbit orbit-two"/><div className="hero-center"><span>TIME</span><strong>∞</strong><small>one system</small></div><div className="time-node node-past"><i/>PAST</div><div className="time-node node-present"><i/>PRESENT</div><div className="time-node node-future"><i/>FUTURE</div><div className="art-caption">THREE TIME REFERENCES</div></div>
           </div>
-          <div className="hero-bottom"><span>ТВОЙ ПУТЬ К ПОНИМАНИЮ</span><span>5 небольших глав ↓</span></div>
+          <div className="hero-bottom"><span>ТВОЙ ПУТЬ К ПОНИМАНИЮ</span><span>4 шага ↓</span></div>
         </section>
         <section className="intro-strip"><div className="intro-icon"><Layers3 size={21}/></div><div><b>Одна система. Несколько характеристик.</b><p>Чтобы понять, как образуется время, зададим действию три вопроса: когда оно происходит, как мы его рассматриваем и связано ли оно с другим моментом.</p></div></section>
-        <section className="chapter-section" id="time">
-          <div className="section-heading"><div className="section-kicker">ГЛАВА 02 · ВРЕМЕННОЙ ОРИЕНТИР</div><h2>Когда происходит <em>действие?</em></h2><p>Первый шаг — определить, к какому временному периоду относится действие.</p></div>
-          <div className="time-cards">{Object.entries(periods).map(([key, p]) => <button key={key} className={'time-card ' + p.color + (time === key ? ' selected' : '')} onClick={() => setTime(key)}><span className="card-top">{p.ru}<span>↗</span></span><strong>{key}</strong><span className="card-desc">{p.desc}</span><i className="example">{p.example}</i>{time === key && <small className="chosen"><Check size={12}/> выбрано</small>}</button>)}</div>
-          <div className="timeline-panel"><div className="panel-heading"><b>ВРЕМЕННАЯ ШКАЛА</b><span>Выбери период выше</span></div><div className="timeline"><div className={'segment past ' + (time === 'Past' ? 'chosen' : '')}><span>PAST</span></div><div className="segment present"><span>NOW</span><i/></div><div className={'segment future ' + (time === 'Future' ? 'chosen' : '')}><span>FUTURE</span></div></div><div className="timeline-caption"><span>раньше</span><span>момент речи</span><span>позже</span></div><p className="selected-explanation"><i className={'dot ' + periods[time].color}/><span><b>{time} — {periods[time].ru.toLowerCase()}.</b> {periods[time].desc}</span></p></div>
-        </section>
-        <section className="chapter-section" id="view">
-          <div className="section-heading"><div className="section-kicker">ГЛАВА 03 · ВЗГЛЯД НА ДЕЙСТВИЕ</div><h2>Как мы рассматриваем <em>действие?</em></h2><p>Одно и то же событие можно представить как факт или показать изнутри — как процесс.</p></div>
-          <div className="view-grid">
-            <article className="view-card"><div className="view-card-label">01 / ФАКТ ИЛИ СОБЫТИЕ</div><h3>Simple</h3><p>Действие рассматривается целиком: как факт, привычка, повторение или отдельное событие. Акцент не на том, как долго оно длилось.</p><div className="mini-visual simple-visual"><i/><span/><i/></div><div className="view-example"><b>I work every day.</b><span>Я работаю каждый день.</span></div></article>
-            <article className="view-card continuous-card"><div className="view-card-label">02 / ПРОЦЕСС</div><h3>Continuous</h3><p>Действие показывается в процессе протекания. Мы словно смотрим на него в определённый момент или период.</p><div className="mini-visual process-visual"><span/><i/></div><div className="view-example"><b>I am working now.</b><span>Я сейчас работаю.</span></div></article>
-          </div>
-          <div className="grammar-note"><b>✳</b><p><strong>Важно:</strong> Simple не означает только «один раз». В Simple действие может повторяться регулярно. Главное — мы не выделяем его протекание как процесс.</p></div>
-        </section>
-        <section className="chapter-section" id="perfect">
-          <div className="section-heading"><div className="section-kicker">ГЛАВА 04 · СВЯЗЬ С МОМЕНТОМ</div><h2>Что добавляет <em>Perfect?</em></h2><p>Perfect показывает, что действие произошло до определённого момента отсчёта. Этот момент может быть в прошлом, настоящем или будущем.</p></div>
-          <div className="perfect-panel"><div className="perfect-copy"><span className="perfect-tag">PERFECT = ПРЕДШЕСТВОВАНИЕ</span><h3>Сначала действие.<br/>Потом — точка отсчёта.</h3><p>Нас интересует не просто событие, а его связь с более поздним моментом: результат, опыт или то, что уже было сделано к этому времени.</p><div className="perfect-formula"><span>HAVE / HAS</span><b>+</b><span>V3</span></div><small><strong>HAVE</strong> — с I / you / we / they; <strong>HAS</strong> — с he / she / it.</small><small>В Perfect Continuous: HAVE / HAS + BEEN + V-ing.</small></div><div className="perfect-visual"><div className="section-kicker">ДО МОМЕНТА ОТСЧЁТА</div><div className="perfect-track"><i/><b/></div><div className="track-labels"><span>действие</span><span>момент отсчёта</span></div><div className="perfect-callout"><Clock3 size={17}/> Действие уже произошло к выбранному моменту.</div></div></div>
-          <div className="grammar-note"><b>✳</b><p><strong>Не путай:</strong> Perfect — это не отдельное «прошедшее время». Он задаёт отношение между действием и моментом отсчёта. Поэтому существуют Present Perfect, Past Perfect и Future Perfect.</p></div>
-        </section>
         <section className="chapter-section builder-section" id="builder">
-          <div className="section-heading"><div className="section-kicker">ГЛАВА 05 · СОБИРАЕМ СИСТЕМУ</div><h2>Из характеристик — <em>в формулу.</em></h2><p>Меняй параметры и наблюдай, как меняется грамматическая конструкция. Это визуальная модель теории, а не тест.</p></div>
+          <div className="section-heading"><div className="section-kicker">ГЛАВА 02 · СОБИРАЕМ СИСТЕМУ</div><h2>Из характеристик — <em>в формулу.</em></h2><p>Меняй параметры и наблюдай, как меняется грамматическая конструкция. Это визуальная модель теории, а не тест.</p></div>
           <div className="builder-card"><div className="builder-controls">
             <div className="control-group"><label>01 · ВРЕМЕННОЙ ОРИЕНТИР</label><div className="segmented">{['Past','Present','Future'].map(v => <button key={v} className={time === v ? 'active' : ''} onClick={() => setTime(v)}>{v}</button>)}</div></div>
             <div className="control-group"><label>02 · ВЗГЛЯД НА ДЕЙСТВИЕ</label><div className="segmented two">{['Simple','Continuous'].map(v => <button key={v} className={aspect === v ? 'active' : ''} onClick={() => setAspect(v)}>{v}</button>)}</div></div>
             <button className={'perfect-toggle ' + (perfect ? 'on' : '')} onClick={() => setPerfect(!perfect)}><span className="toggle-box">{perfect && <Check size={13}/>}</span><span><b>Добавить Perfect</b><small>Действие предшествует моменту отсчёта</small></span><i>{perfect ? 'ON' : 'OFF'}</i></button>
             <div className="control-group"><label>03 · ПОДЛЕЖАЩЕЕ</label><div className="subject-picker"><select value={subject} onChange={e => setSubject(e.target.value)}><option>I</option><option>You</option><option>He</option><option>She</option><option>It</option><option>We</option><option>They</option></select></div></div>
           </div><div className="builder-result"><span className="result-eyebrow">ПОЛУЧИВШАЯСЯ КОНСТРУКЦИЯ</span><h3>{shownResult[2]}</h3><div className="legend formula-legend"><span><i/> вспомогательная часть</span><span><b/> смысловой глагол</span></div><div className="formula-box"><strong>{shownResult[0]}</strong>{shownResult[1] && <><i>+</i><b>{shownResult[1]}</b></>}</div><div className="live-verb"><span>{passive ? 'ПРИМЕР PASSIVE VOICE' : 'КАК МЕНЯЕТСЯ ГЛАГОЛ'}</span><strong key={shownSentence} className="verb-animation">{passive ? (passiveUnsupported ? 'В этой форме Passive обычно не используется.' : shownSentence) : shownSentence}</strong><small>{passive ? (passiveUnsupported ? 'Perfect Continuous Passive грамматически возможно, но крайне редко и обычно избегается.' : 'В Passive Voice подлежащее обозначает того, на кого направлено действие. Исполнитель действия может быть не указан.') : 'Форма обновляется при изменении времени, аспекта, Perfect или подлежащего.'}</small></div><p>{passive ? 'Passive Voice образуется с помощью формы BE в выбранном времени и смыслового глагола в V3.' : perfect ? 'Perfect добавляет связь с более поздним моментом отсчёта.' : aspect === 'Continuous' ? 'Continuous показывает действие в процессе и использует форму BE + V-ing.' : 'Simple представляет действие как факт, привычку или целое событие.'}</p><button className={'passive-toggle ' + (passive ? 'on' : '')} onClick={() => setPassive(!passive)} disabled={!passive && passiveUnsupported}>{passive ? 'Вернуться к Active Voice' : 'Образовать Passive Voice'} <span>⇄</span></button>{passiveUnsupported && !passive && <small className="passive-unavailable-note">Функция недоступна: эта форма Passive Voice практически не используется.</small>}<button className="detail-link builder-detail-link" onClick={() => openTense(result[2])}>Прочитать подробнее <span>→</span></button></div></div>
-          <div className="next-chapter"><div><span>СЛЕДУЮЩИЙ ЭТАП</span><h3>12 времён английского языка</h3><p>Теперь можно разобрать каждую конструкцию отдельно — от смысла до готовой формулы.</p></div><BookOpen size={28}/></div>
+          <div className="next-chapter"><div><span>СЛЕДУЮЩИЙ ЭТАП</span><h3>Три характеристики действия</h3><p>Теперь разберём временной ориентир, способ представить действие и связь с моментом отсчёта.</p></div><BookOpen size={28}/></div>
+        </section>
+
+        <section className="chapter-section concepts-section" id="concepts">
+          <div className="section-heading"><div className="section-kicker">ГЛАВА 03 · ОСНОВНЫЕ ХАРАКТЕРИСТИКИ</div><h2>Три вопроса — <em>одна система.</em></h2><p>Разберём, как время, способ представления действия и связь с моментом отсчёта работают вместе.</p></div>
+          <div className="concept-part" id="time">
+          <div className="section-heading"><div className="section-kicker">ЧАСТЬ 1 · ВРЕМЕННОЙ ОРИЕНТИР</div><h2>Когда происходит <em>действие?</em></h2><p>Первый шаг — определить, к какому временному периоду относится действие.</p></div>
+          <div className="time-cards">{Object.entries(periods).map(([key, p]) => <button key={key} className={'time-card ' + p.color + (time === key ? ' selected' : '')} onClick={() => setTime(key)}><span className="card-top">{p.ru}<span>↗</span></span><strong>{key}</strong><span className="card-desc">{p.desc}</span><i className="example">{p.example}</i>{time === key && <small className="chosen"><Check size={12}/> выбрано</small>}</button>)}</div>
+          <div className="timeline-panel"><div className="panel-heading"><b>ВРЕМЕННАЯ ШКАЛА</b><span>Выбери период выше</span></div><div className="timeline"><div className={'segment past ' + (time === 'Past' ? 'chosen' : '')}><span>PAST</span></div><div className="segment present"><span>NOW</span><i/></div><div className={'segment future ' + (time === 'Future' ? 'chosen' : '')}><span>FUTURE</span></div></div><div className="timeline-caption"><span>раньше</span><span>момент речи</span><span>позже</span></div><p className="selected-explanation"><i className={'dot ' + periods[time].color}/><span><b>{time} — {periods[time].ru.toLowerCase()}.</b> {periods[time].desc}</span></p></div>
+        </div>
+        <div className="concept-part" id="view">
+          <div className="section-heading"><div className="section-kicker">ЧАСТЬ 2 · ВЗГЛЯД НА ДЕЙСТВИЕ</div><h2>Как мы рассматриваем <em>действие?</em></h2><p>Одно и то же событие можно представить как факт или показать изнутри — как процесс.</p></div>
+          <div className="view-grid">
+            <article className="view-card"><div className="view-card-label">01 / ФАКТ ИЛИ СОБЫТИЕ</div><h3>Simple</h3><p>Действие рассматривается целиком: как факт, привычка, повторение или отдельное событие. Акцент не на том, как долго оно длилось.</p><div className="mini-visual simple-visual"><i/><span/><i/></div><div className="view-example"><b>I work every day.</b><span>Я работаю каждый день.</span></div></article>
+            <article className="view-card continuous-card"><div className="view-card-label">02 / ПРОЦЕСС</div><h3>Continuous</h3><p>Действие показывается в процессе протекания. Мы словно смотрим на него в определённый момент или период.</p><div className="mini-visual process-visual"><span/><i/></div><div className="view-example"><b>I am working now.</b><span>Я сейчас работаю.</span></div></article>
+          </div>
+          <div className="grammar-note"><b>✳</b><p><strong>Важно:</strong> Simple не означает только «один раз». В Simple действие может повторяться регулярно. Главное — мы не выделяем его протекание как процесс.</p></div>
+        </div>
+        <div className="concept-part" id="perfect">
+          <div className="section-heading"><div className="section-kicker">ЧАСТЬ 3 · СВЯЗЬ С МОМЕНТОМ</div><h2>Что добавляет <em>Perfect?</em></h2><p>Perfect показывает, что действие произошло до определённого момента отсчёта. Этот момент может быть в прошлом, настоящем или будущем.</p></div>
+          <div className="perfect-panel"><div className="perfect-copy"><span className="perfect-tag">PERFECT = ПРЕДШЕСТВОВАНИЕ</span><h3>Сначала действие.<br/>Потом — точка отсчёта.</h3><p>Нас интересует не просто событие, а его связь с более поздним моментом: результат, опыт или то, что уже было сделано к этому времени.</p><div className="perfect-formula"><span>HAVE / HAS</span><b>+</b><span>V3</span></div><small><strong>HAVE</strong> — с I / you / we / they; <strong>HAS</strong> — с he / she / it.</small><small>В Perfect Continuous: HAVE / HAS + BEEN + V-ing.</small></div><div className="perfect-visual"><div className="section-kicker">ДО МОМЕНТА ОТСЧЁТА</div><div className="perfect-track"><i/><b/></div><div className="track-labels"><span>действие</span><span>момент отсчёта</span></div><div className="perfect-callout"><Clock3 size={17}/> Действие уже произошло к выбранному моменту.</div></div></div>
+          <div className="grammar-note"><b>✳</b><p><strong>Не путай:</strong> Perfect — это не отдельное «прошедшее время». Он задаёт отношение между действием и моментом отсчёта. Поэтому существуют Present Perfect, Past Perfect и Future Perfect.</p></div>
+        </div>
         </section>
 
         <section className="chapter-section tenses-section" id="tenses">
           <div className="section-heading">
-            <div className="section-kicker">ГЛАВА 06 · ПОЛНЫЙ СПРАВОЧНИК</div>
+            <div className="section-kicker">ГЛАВА 04 · ПОЛНЫЙ СПРАВОЧНИК</div>
             <h2>12 времён — <em>одна система.</em></h2>
             <p>Каждое время складывается из временного ориентира и способа представить действие. Сравнивай не только формулы, но и то, на чём делает акцент говорящий.</p>
           </div>
@@ -280,7 +282,7 @@ function App() {
           </div>
         </div>}
         <footer className="footer"><a className="brand" href="#intro"><span className="brand-mark"><BookOpen size={16}/></span>english<span className="brand-light">tenses</span></a><span>Учимся понимать, а не заучивать.</span><span>© 2026</span></footer>
-        <div className="page-navigation"><button onClick={() => goTo(chapters[Math.max(0, chapters.findIndex(c => c[0] === active)-1)][0])} disabled={active === 'intro'}>← Назад</button><span>{String(chapters.findIndex(c => c[0] === active)+1).padStart(2,'0')} / 06</span><button onClick={() => goTo(chapters[Math.min(chapters.length-1, chapters.findIndex(c => c[0] === active)+1)][0])} disabled={active === 'tenses'}>Далее <ArrowRight size={15}/></button></div>
+        <div className="page-navigation"><button onClick={() => goTo(chapters[Math.max(0, chapters.findIndex(c => c[0] === active)-1)][0])} disabled={active === 'intro'}>← Назад</button><span>{String(chapters.findIndex(c => c[0] === active)+1).padStart(2,'0')} / 04</span><button onClick={() => goTo(chapters[Math.min(chapters.length-1, chapters.findIndex(c => c[0] === active)+1)][0])} disabled={active === 'tenses'}>Далее <ArrowRight size={15}/></button></div>
       </main>
     </div>
   </div>
