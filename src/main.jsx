@@ -142,6 +142,7 @@ function App() {
   const [conceptPage, setConceptPage] = useState(0)
   const [simplePattern, setSimplePattern] = useState('regular')
   const [selectedSimpleExample, setSelectedSimpleExample] = useState('present')
+  const [selectedContinuousExample, setSelectedContinuousExample] = useState('present-continuous')
   const [voiceMode, setVoiceMode] = useState('active')
   const [mobileOpen, setMobileOpen] = useState(false)
   const [time, setTime] = useState('Past')
@@ -157,6 +158,14 @@ function App() {
     setActive(id); setMobileOpen(false); setSelectedTense(null)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+  const continuousExamples = [
+    {id:'present-continuous',name:'Present Continuous',example:'I am working now.',translation:'Я сейчас работаю.',start:58,end:88,focus:72,label:'NOW',note:'Отрезок показывает процесс, который происходит в момент речи. Мы смотрим на действие изнутри.'},
+    {id:'past-continuous',name:'Past Continuous',example:'I was working at five yesterday.',translation:'Вчера в пять я работал(а).',start:12,end:48,focus:35,label:'5 PM',note:'Процесс показан в выбранный момент прошлого. Он начался раньше и мог продолжаться после этой точки.'},
+    {id:'future-continuous',name:'Future Continuous',example:'I will be working at five tomorrow.',translation:'Завтра в пять я буду работать.',start:58,end:91,focus:74,label:'5 PM',note:'Мы переносимся в будущий момент и видим, что действие будет идти в это время.'},
+    {id:'present-perfect-continuous',name:'Present Perfect Continuous',example:'I have been working for two hours.',translation:'Я работаю уже два часа.',start:12,end:72,focus:72,label:'NOW',note:'Процесс начался раньше и продолжается до настоящего момента. Важны его длительность и связь с NOW.'},
+    {id:'past-perfect-continuous',name:'Past Perfect Continuous',example:'I had been working for two hours before lunch.',translation:'До обеда я работал(а) уже два часа.',start:10,end:48,focus:48,label:'LUNCH',note:'Процесс длился до определённой точки в прошлом — обеда. Акцент на продолжительности к этому моменту.'},
+    {id:'future-perfect-continuous',name:'Future Perfect Continuous',example:'By six, I will have been working for two hours.',translation:'К шести я буду работать уже два часа.',start:35,end:78,focus:78,label:'6 PM',note:'Из будущей точки отсчёта смотрим назад на процесс и отмечаем, сколько времени он к тому моменту будет продолжаться.'}
+  ]
   const simpleExamples = [
     {id:'present',name:'Present Simple',example:'I work every day.',translation:'Я работаю каждый день.',positions:[12,31,50,69,88],repeat:true,note:'Несколько флажков показывают привычку: действие повторяется регулярно, и каждое повторение представлено как факт.'},
     {id:'past',name:'Past Simple',example:'I visited London last year.',translation:'Я посетил(а) Лондон в прошлом году.',positions:[27],note:'Один флажок — отдельное завершённое событие в прошлом.'},
@@ -251,7 +260,18 @@ function App() {
               </div>
               <div className="view-example"><b>{simpleExamples.find(item => item.id === selectedSimpleExample).example}</b><span>{simpleExamples.find(item => item.id === selectedSimpleExample).translation}</span></div>
               <p className="simple-pattern-note">{simpleExamples.find(item => item.id === selectedSimpleExample).note}</p></article>
-            <article className="view-card continuous-card"><div className="view-card-label">02 / ПРОЦЕСС</div><h3>Continuous</h3><p>Действие показывается в процессе протекания. Мы словно смотрим на него в определённый момент или период.</p><div className="mini-visual process-visual"><span/><i/></div><div className="view-example"><b>I am working now.</b><span>Я сейчас работаю.</span></div></article>
+            <article className="view-card continuous-card"><div className="view-card-label">02 / ПРОЦЕСС</div><h3>Continuous</h3><p>Действие показывается в процессе протекания. Мы словно смотрим на него в определённый момент или период.</p>
+              <p className="simple-instruction">Нажмите на пример, чтобы увидеть его визуализацию.</p>
+              <div className="simple-examples continuous-examples" role="group" aria-label="Примеры форм Continuous">
+                {continuousExamples.map(item => <button type="button" key={item.id} className={selectedContinuousExample === item.id ? 'active' : ''} onClick={() => setSelectedContinuousExample(item.id)}><span>{item.name}</span><b>{item.example}</b></button>)}
+              </div>
+              <div className="mini-visual process-visual" aria-label="Визуализация процесса на временной линии">
+                <span className="process-range" style={{left: continuousExamples.find(item => item.id === selectedContinuousExample).start + '%',width: (continuousExamples.find(item => item.id === selectedContinuousExample).end - continuousExamples.find(item => item.id === selectedContinuousExample).start) + '%'}}/>
+                <i className="process-focus" style={{left: continuousExamples.find(item => item.id === selectedContinuousExample).focus + '%'}}/>
+                <b className="process-focus-label" style={{left: continuousExamples.find(item => item.id === selectedContinuousExample).focus + '%'}}>{continuousExamples.find(item => item.id === selectedContinuousExample).label}</b>
+              </div>
+              <div className="view-example"><b>{continuousExamples.find(item => item.id === selectedContinuousExample).example}</b><span>{continuousExamples.find(item => item.id === selectedContinuousExample).translation}</span></div>
+              <p className="simple-pattern-note">{continuousExamples.find(item => item.id === selectedContinuousExample).note}</p></article>
           </div>
           <div className="grammar-note"><b>✳</b><p><strong>Важно:</strong> Simple не означает только «один раз». В Simple действие может повторяться регулярно. Главное — мы не выделяем его протекание как процесс.</p></div>
         </div>
