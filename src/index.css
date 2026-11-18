@@ -215,3 +215,17 @@
 .concept-page-dots button{width:19px;height:4px;padding:0;border:0;border-radius:5px;background:#ded9e8;cursor:pointer}
 .concept-page-dots button.active{background:#8878b6}
 @media(max-width:760px){.concept-page-nav{margin:20px 0 24px auto}}
+
+
+/* Interactive Simple timeline: one event or a recurring pattern */
+.simple-choice{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:14px 0 4px;padding:4px;border-radius:8px;background:#f0efe9}
+.simple-choice button{border:0;border-radius:6px;padding:9px 7px;background:transparent;color:#85818b;font:600 9px Manrope,sans-serif;cursor:pointer;transition:background .2s,color .2s,box-shadow .2s}
+.simple-choice button.active{background:#fff;color:#62558e;box-shadow:0 2px 6px #2623330d}
+.simple-visual{height:58px;margin:12px 0 10px;position:relative;display:block}
+.simple-visual .simple-axis{position:absolute;left:3%;right:3%;top:30px;height:2px;background:#d5d1da}
+.simple-visual .event-flag{position:absolute;left:50%;top:12px;width:2px;height:19px;background:#8878b6;transform:translateX(-50%)}
+.simple-visual .event-flag:before{content:'';position:absolute;left:1px;top:0;width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:9px solid #8878b6}
+.simple-visual .event-flag:after{content:'';position:absolute;left:-3px;bottom:-2px;width:8px;height:8px;border-radius:50%;background:#fbfbf8;border:2px solid #8878b6}
+.simple-visual.repeated-events .event-flag{top:12px}
+.simple-pattern-note{margin:10px 0 0;padding-top:10px;border-top:1px solid #e9e7e2;color:#85818b;font-size:9px;line-height:1.55}
+@media(max-width:760px){.simple-choice button{font-size:8px;padding:9px 5px}.simple-visual{height:54px}}
