@@ -67,3 +67,33 @@
 .detail-link span{font-size:14px;transition:transform .2s}
 .detail-link:hover span{transform:translateX(4px)}
 @media(max-width:760px){.detail-page{inset:62px 0 0;padding:22px 22px 55px}.detail-hero{padding:35px 0 25px}.detail-form-grid{grid-template-columns:1fr}.detail-form-grid article{padding:12px 14px}.detail-block h2{font-size:20px}}
+
+
+/* Chapter-based navigation and animated verb builder */
+.content{position:relative;min-height:calc(100vh - 70px);padding-bottom:88px}
+.content>.hero-section,.content>.intro-strip,.content>.chapter-section{display:none}
+.content[data-active="intro"]>.hero-section{display:block;animation:chapter-enter .32s ease both}
+.content[data-active="intro"]>.intro-strip{display:flex;animation:chapter-enter .4s ease both}
+.content[data-active="time"]>#time,
+.content[data-active="view"]>#view,
+.content[data-active="perfect"]>#perfect,
+.content[data-active="builder"]>#builder,
+.content[data-active="tenses"]>#tenses{display:block;animation:chapter-enter .32s ease both}
+.content>.footer{display:none}
+.page-navigation{position:fixed;z-index:35;left:calc(50% + 125px);bottom:15px;transform:translateX(-50%);display:flex;align-items:center;gap:22px;padding:9px 12px 9px 16px;border:1px solid #e8e5ef;border-radius:14px;background:#fffefaed;backdrop-filter:blur(14px);box-shadow:0 8px 30px #302d3b12}
+.page-navigation button{display:flex;align-items:center;gap:7px;border:0;background:transparent;color:#6e6199;font:700 10px Manrope,sans-serif;cursor:pointer;padding:5px}
+.page-navigation button:disabled{color:#c4c0ca;cursor:default}
+.page-navigation span{font-size:9px;letter-spacing:1px;color:#a09aa9;font-weight:700}
+@keyframes chapter-enter{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+.verb-input{width:100%;border:1px solid #e6e2ed;border-radius:8px;background:#fff;padding:11px 12px;color:#514a68;font:600 12px Manrope;outline:none}
+.verb-input:focus{border-color:#a99bcf;box-shadow:0 0 0 3px #a99bcf20}
+.subject-picker{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#918c98;font-size:9px}
+.subject-picker select{border:1px solid #e6e2ed;border-radius:7px;background:#fff;padding:7px 10px;color:#62558e;font:700 10px Manrope}
+.live-verb{display:flex;flex-direction:column;gap:8px;margin-top:19px;padding:15px 16px;border:1px solid #e4dfef;border-radius:11px;background:#fbfaff}
+.live-verb>span{font-size:8px;letter-spacing:1.2px;font-weight:700;color:#9288aa}
+.live-verb strong{font:800 clamp(17px,2.2vw,23px) Manrope;color:#514477;overflow-wrap:anywhere}
+.live-verb small{font-size:9px;line-height:1.5;color:#9a95a1}
+.verb-animation{animation:verb-change .28s cubic-bezier(.2,.75,.25,1) both}
+@keyframes verb-change{from{opacity:0;transform:translateY(7px);filter:blur(3px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@media(max-width:760px){.content{padding-bottom:85px}.page-navigation{left:50%;bottom:10px;gap:16px;padding:8px 10px 8px 13px}.page-navigation button{font-size:9px}.live-verb{margin-top:15px}}
+@media(prefers-reduced-motion:reduce){.content[data-active]>.hero-section,.content[data-active]>.intro-strip,.content[data-active]>.chapter-section,.verb-animation{animation:none}}
