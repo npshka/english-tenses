@@ -141,6 +141,7 @@ function App() {
   const [active, setActive] = useState('intro')
   const [conceptPage, setConceptPage] = useState(0)
   const [simplePattern, setSimplePattern] = useState('regular')
+  const [selectedSimpleExample, setSelectedSimpleExample] = useState('present')
   const [voiceMode, setVoiceMode] = useState('active')
   const [mobileOpen, setMobileOpen] = useState(false)
   const [time, setTime] = useState('Past')
@@ -156,6 +157,14 @@ function App() {
     setActive(id); setMobileOpen(false); setSelectedTense(null)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+  const simpleExamples = [
+    {id:'present',name:'Present Simple',example:'I work every day.',translation:'Я работаю каждый день.',positions:[12,31,50,69,88],repeat:true,note:'Несколько флажков показывают привычку: действие повторяется регулярно, и каждое повторение представлено как факт.'},
+    {id:'past',name:'Past Simple',example:'I visited London last year.',translation:'Я посетил(а) Лондон в прошлом году.',positions:[27],note:'Один флажок — отдельное завершённое событие в прошлом.'},
+    {id:'future',name:'Future Simple',example:'I will call you tomorrow.',translation:'Я позвоню тебе завтра.',positions:[82],note:'Флажок отмечает будущее событие, представленное как целый факт.'},
+    {id:'present-perfect',name:'Present Perfect',example:'I have finished my homework.',translation:'Я закончил(а) домашнее задание.',positions:[39],reference:57,note:'Действие произошло раньше настоящего момента; точка отсчёта — NOW, важна связь с настоящим результатом.'},
+    {id:'past-perfect',name:'Past Perfect',example:'I had left before he arrived.',translation:'Я ушёл(ушла) до того, как он приехал.',positions:[13],reference:35,note:'Флажок действия расположен раньше точки отсчёта в прошлом — момента, когда он приехал.'},
+    {id:'future-perfect',name:'Future Perfect',example:'I will have finished by six.',translation:'Я закончу к шести.',positions:[55],reference:83,note:'Действие будет завершено до будущей точки отсчёта — шести часов.'}
+  ]
   const irregular = { go:['went','gone'], eat:['ate','eaten'], see:['saw','seen'], write:['wrote','written'], do:['did','done'], have:['had','had'], make:['made','made'], take:['took','taken'], read:['read','read'], come:['came','come'], buy:['bought','bought'], speak:['spoke','spoken'], be:['was / were','been'] }
   const baseVerb = 'ask'
   const pastVerb = irregular[baseVerb]?.[0] || (baseVerb.endsWith('e') ? baseVerb + 'd' : baseVerb.endsWith('y') && !/[aeiou]y$/.test(baseVerb) ? baseVerb.slice(0,-1)+'ied' : baseVerb + 'ed')
@@ -230,16 +239,18 @@ function App() {
         <div className={`concept-part ${conceptPage === 1 ? "concept-part-active" : ""}`} id="view">
           <div className="section-heading"><div className="section-kicker">ЧАСТЬ 2 · ВЗГЛЯД НА ДЕЙСТВИЕ</div><h2>Как мы рассматриваем <em>действие?</em></h2><p>Одно и то же событие можно представить как факт или показать изнутри — как процесс.</p></div>
           <div className="view-grid">
-            <article className="view-card"><div className="view-card-label">01 / ФАКТ ИЛИ СОБЫТИЕ</div><h3>Simple</h3><p>Действие рассматривается целиком: как факт, привычка, повторение или отдельное событие. Акцент не на том, как долго оно длилось.</p><div className="simple-choice" role="group" aria-label="Характер действия">
-                <button type="button" className={simplePattern === 'single' ? 'active' : ''} onClick={() => setSimplePattern('single')}>Разовое действие</button>
-                <button type="button" className={simplePattern === 'regular' ? 'active' : ''} onClick={() => setSimplePattern('regular')}>Регулярное действие</button>
+            <article className="view-card"><div className="view-card-label">01 / ФАКТ ИЛИ СОБЫТИЕ</div><h3>Simple</h3><p>Действие рассматривается целиком: как факт, привычка, повторение или отдельное событие. Акцент не на том, как долго оно длилось.</p>
+              <p className="simple-instruction">Нажмите на пример, чтобы увидеть его визуализацию.</p>
+              <div className="simple-examples" role="group" aria-label="Примеры форм Simple">
+                {simpleExamples.map(item => <button type="button" key={item.id} className={selectedSimpleExample === item.id ? 'active' : ''} onClick={() => setSelectedSimpleExample(item.id)}><span>{item.name}</span><b>{item.example}</b></button>)}
               </div>
-              <div className={'mini-visual simple-visual ' + (simplePattern === 'single' ? 'single-event' : 'repeated-events')} aria-label={simplePattern === 'single' ? 'Одно событие на временной линии' : 'Повторяющиеся события на временной линии'}>
+              <div className={'mini-visual simple-visual ' + (simpleExamples.find(item => item.id === selectedSimpleExample).repeat ? 'repeated-events' : 'single-event')} aria-label="Визуализация выбранного примера на временной линии">
                 <span className="simple-axis"/>
-                {simplePattern === 'single' ? <i className="event-flag"/> : <>{[12,31,50,69,88].map((pos) => <i key={pos} className="event-flag" style={{left: pos + '%'}}/>)}</>}
+                {simpleExamples.find(item => item.id === selectedSimpleExample).positions.map((pos, index) => <i key={index} className="event-flag" style={{left: pos + '%'}}/>)}
+                {simpleExamples.find(item => item.id === selectedSimpleExample).reference && <><i className="reference-point" style={{left: simpleExamples.find(item => item.id === selectedSimpleExample).reference + '%'}}/><span className="reference-label" style={{left: simpleExamples.find(item => item.id === selectedSimpleExample).reference + '%'}}>ТОЧКА ОТСЧЁТА</span></>}
               </div>
-              <div className="view-example"><b>{simplePattern === 'single' ? 'I visited London last year.' : 'I work every day.'}</b><span>{simplePattern === 'single' ? 'Я посетил(а) Лондон в прошлом году.' : 'Я работаю каждый день.'}</span></div>
-              <p className="simple-pattern-note">{simplePattern === 'single' ? 'Один флажок — одно событие, представленное как целый факт.' : 'Несколько флажков — действие повторяется регулярно, но каждое повторение всё равно рассматривается как факт.'}</p></article>
+              <div className="view-example"><b>{simpleExamples.find(item => item.id === selectedSimpleExample).example}</b><span>{simpleExamples.find(item => item.id === selectedSimpleExample).translation}</span></div>
+              <p className="simple-pattern-note">{simpleExamples.find(item => item.id === selectedSimpleExample).note}</p></article>
             <article className="view-card continuous-card"><div className="view-card-label">02 / ПРОЦЕСС</div><h3>Continuous</h3><p>Действие показывается в процессе протекания. Мы словно смотрим на него в определённый момент или период.</p><div className="mini-visual process-visual"><span/><i/></div><div className="view-example"><b>I am working now.</b><span>Я сейчас работаю.</span></div></article>
           </div>
           <div className="grammar-note"><b>✳</b><p><strong>Важно:</strong> Simple не означает только «один раз». В Simple действие может повторяться регулярно. Главное — мы не выделяем его протекание как процесс.</p></div>
