@@ -74,10 +74,8 @@
 .content>.hero-section,.content>.intro-strip,.content>.chapter-section{display:none}
 .content[data-active="intro"]>.hero-section{display:block;animation:chapter-enter .32s ease both}
 .content[data-active="intro"]>.intro-strip{display:flex;animation:chapter-enter .4s ease both}
-.content[data-active="time"]>#time,
-.content[data-active="view"]>#view,
-.content[data-active="perfect"]>#perfect,
 .content[data-active="builder"]>#builder,
+.content[data-active="concepts"]>#concepts,
 .content[data-active="tenses"]>#tenses{display:block;animation:chapter-enter .32s ease both}
 .content>.footer{display:none}
 .page-navigation{position:fixed;z-index:35;left:calc(50% + 125px);bottom:15px;transform:translateX(-50%);display:flex;align-items:center;gap:22px;padding:9px 12px 9px 16px;border:1px solid #e8e5ef;border-radius:14px;background:#fffefaed;backdrop-filter:blur(14px);box-shadow:0 8px 30px #302d3b12}
