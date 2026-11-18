@@ -175,10 +175,10 @@ function App() {
   const result = formula()
   const passiveUnsupported = perfect && aspect === 'Continuous'
   const passiveAux = perfect
-    ? (time === 'Past' ? 'had been' : time === 'Future' ? 'will have been' : `${haveForm} been`)
+    ? (time === 'Past' ? 'had been' : time === 'Future' ? 'will have been' : 'has been')
     : aspect === 'Continuous'
-      ? (time === 'Past' ? (['I','He','She','It'].includes(subject) ? 'was being' : 'were being') : time === 'Future' ? 'will be being' : `${beForm} being`)
-      : (time === 'Past' ? (['I','He','She','It'].includes(subject) ? 'was' : 'were') : time === 'Future' ? 'will be' : beForm)
+      ? (time === 'Past' ? 'was being' : time === 'Future' ? 'will be being' : 'is being')
+      : (time === 'Past' ? 'was' : time === 'Future' ? 'will be' : 'is')
   const passiveResult = [passiveAux, 'V3', `${result[2]} Passive`]
   const shownResult = passive ? passiveResult : result
   const shownSentence = passive ? `The task ${passiveAux} ${thirdVerb}.` : sampleSentence
