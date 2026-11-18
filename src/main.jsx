@@ -148,7 +148,6 @@ function App() {
   const [passive, setPassive] = useState(false)
   const [selectedTense, setSelectedTense] = useState(null)
   const [detailOrigin, setDetailOrigin] = useState('tenses')
-  const [verb, setVerb] = useState('work')
   const [subject, setSubject] = useState('I')
   const openTense = (name) => { setDetailOrigin(active); setSelectedTense(name); window.scrollTo({ top: 0, behavior: 'smooth' }) }
   const closeTense = () => { setSelectedTense(null); setActive(detailOrigin); window.scrollTo({ top: 0, behavior: 'smooth' }) }
@@ -157,7 +156,7 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
   const irregular = { go:['went','gone'], eat:['ate','eaten'], see:['saw','seen'], write:['wrote','written'], do:['did','done'], have:['had','had'], make:['made','made'], take:['took','taken'], read:['read','read'], come:['came','come'], buy:['bought','bought'], speak:['spoke','spoken'], be:['was / were','been'] }
-  const baseVerb = verb.trim().toLowerCase() || 'work'
+  const baseVerb = 'ask'
   const pastVerb = irregular[baseVerb]?.[0] || (baseVerb.endsWith('e') ? baseVerb + 'd' : baseVerb.endsWith('y') && !/[aeiou]y$/.test(baseVerb) ? baseVerb.slice(0,-1)+'ied' : baseVerb + 'ed')
   const thirdVerb = irregular[baseVerb]?.[1] || (baseVerb.endsWith('e') ? baseVerb + 'd' : baseVerb.endsWith('y') && !/[aeiou]y$/.test(baseVerb) ? baseVerb.slice(0,-1)+'ied' : baseVerb + 'ed')
   const ingVerb = baseVerb.endsWith('ie') ? baseVerb.slice(0,-2)+'ying' : baseVerb.endsWith('e') && !baseVerb.endsWith('ee') ? baseVerb.slice(0,-1)+'ing' : baseVerb+'ing'
@@ -181,7 +180,7 @@ function App() {
       : (time === 'Past' ? 'was' : time === 'Future' ? 'will be' : 'is')
   const passiveResult = [passiveAux, 'V3', `${result[2]} Passive`]
   const shownResult = passive ? passiveResult : result
-  const shownSentence = passive ? `The task ${passiveAux} ${thirdVerb}.` : sampleSentence
+  const shownSentence = passive ? `The question ${passiveAux} ${thirdVerb}.` : sampleSentence
   return <div className="site-shell">
     <header className="topbar">
       <a className="brand" href="#intro"><span className="brand-mark"><BookOpen size={18}/></span><span>english<span className="brand-light">tenses</span></span></a>
@@ -228,7 +227,7 @@ function App() {
             <div className="control-group"><label>01 · ВРЕМЕННОЙ ОРИЕНТИР</label><div className="segmented">{['Past','Present','Future'].map(v => <button key={v} className={time === v ? 'active' : ''} onClick={() => setTime(v)}>{v}</button>)}</div></div>
             <div className="control-group"><label>02 · ВЗГЛЯД НА ДЕЙСТВИЕ</label><div className="segmented two">{['Simple','Continuous'].map(v => <button key={v} className={aspect === v ? 'active' : ''} onClick={() => setAspect(v)}>{v}</button>)}</div></div>
             <button className={'perfect-toggle ' + (perfect ? 'on' : '')} onClick={() => setPerfect(!perfect)}><span className="toggle-box">{perfect && <Check size={13}/>}</span><span><b>Добавить Perfect</b><small>Действие предшествует моменту отсчёта</small></span><i>{perfect ? 'ON' : 'OFF'}</i></button>
-            <div className="control-group"><label>03 · СМЫСЛОВОЙ ГЛАГОЛ</label><input className="verb-input" value={verb} onChange={e => setVerb(e.target.value.replace(/[^a-zA-Z]/g, ''))} aria-label="Начальная форма глагола" placeholder="Например, work"/><div className="subject-picker"><span>Подлежащее</span><select value={subject} onChange={e => setSubject(e.target.value)}><option>I</option><option>You</option><option>He</option><option>She</option><option>It</option><option>We</option><option>They</option></select></div></div>
+            <div className="control-group"><label>03 · СМЫСЛОВОЙ ГЛАГОЛ</label><div className="fixed-verb"><strong>ask</strong><span>используем во всех примерах</span></div><div className="subject-picker"><span>Подлежащее</span><select value={subject} onChange={e => setSubject(e.target.value)}><option>I</option><option>You</option><option>He</option><option>She</option><option>It</option><option>We</option><option>They</option></select></div></div>
           </div><div className="builder-result"><span className="result-eyebrow">ПОЛУЧИВШАЯСЯ КОНСТРУКЦИЯ</span><h3>{shownResult[2]}</h3><div className="formula-box"><strong>{shownResult[0]}</strong>{shownResult[1] && <><i>+</i><b>{shownResult[1]}</b></>}</div><div className="live-verb"><span>{passive ? 'ПРИМЕР PASSIVE VOICE' : 'КАК МЕНЯЕТСЯ ГЛАГОЛ'}</span><strong key={shownSentence} className="verb-animation">{passive ? (passiveUnsupported ? 'В этой форме Passive обычно не используется.' : shownSentence) : shownSentence}</strong><small>{passive ? (passiveUnsupported ? 'Perfect Continuous Passive грамматически возможно, но крайне редко и обычно избегается.' : 'В Passive Voice подлежащее обозначает того, на кого направлено действие. Исполнитель действия может быть не указан.') : 'Форма обновляется при изменении времени, аспекта, Perfect или подлежащего.'}</small></div><p>{passive ? 'Passive Voice образуется с помощью формы BE в выбранном времени и смыслового глагола в V3.' : perfect ? 'Perfect добавляет связь с более поздним моментом отсчёта.' : aspect === 'Continuous' ? 'Continuous показывает действие в процессе и использует форму BE + V-ing.' : 'Simple представляет действие как факт, привычку или целое событие.'}</p><div className="legend"><span><i/> вспомогательная часть</span><span><b/> смысловой глагол</span></div><button className={'passive-toggle ' + (passive ? 'on' : '')} onClick={() => setPassive(!passive)} disabled={!passive && passiveUnsupported}>{passive ? 'Вернуться к Active Voice' : 'Образовать Passive Voice'} <span>⇄</span></button><button className="detail-link builder-detail-link" onClick={() => openTense(result[2])}>Прочитать подробнее <span>→</span></button></div></div>
           <div className="next-chapter"><div><span>СЛЕДУЮЩИЙ ЭТАП</span><h3>12 времён английского языка</h3><p>Теперь можно разобрать каждую конструкцию отдельно — от смысла до готовой формулы.</p></div><BookOpen size={28}/></div>
         </section>
