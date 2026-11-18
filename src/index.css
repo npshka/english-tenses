@@ -200,3 +200,18 @@
 .perfect-structure{font-size:9px;line-height:1.8;color:#777380;margin:14px 0 0}
 .perfect-structure b{color:#51466f}
 @media(max-width:760px){.perfect-time-forms{gap:6px}.perfect-time-forms>div{padding:9px 6px}.perfect-time-forms strong{font-size:11px}}
+
+
+/* Internal page switcher for the characteristics chapter */
+.concepts-section .concept-part{display:none}
+.concepts-section .concept-part.concept-part-active{display:block;animation:chapter-enter .28s ease both}
+.concept-page-nav{display:flex;align-items:center;justify-content:space-between;max-width:250px;margin:24px 0 28px auto;padding:9px 12px;border:1px solid #e7e3ef;border-radius:13px;background:#fbfaff}
+.concept-page-nav>button{width:32px;height:32px;border:0;border-radius:9px;background:#eeebf6;color:#6d5e9b;font:700 23px/1 Manrope;cursor:pointer;transition:background .2s,opacity .2s}
+.concept-page-nav>button:hover:not(:disabled){background:#e2dcf0}
+.concept-page-nav>button:disabled{opacity:.3;cursor:default}
+.concept-page-nav>div{display:flex;flex-direction:column;align-items:center;gap:7px}
+.concept-page-nav>div>span{font-size:8px;letter-spacing:1px;font-weight:800;color:#89819c}
+.concept-page-dots{display:flex;gap:6px}
+.concept-page-dots button{width:19px;height:4px;padding:0;border:0;border-radius:5px;background:#ded9e8;cursor:pointer}
+.concept-page-dots button.active{background:#8878b6}
+@media(max-width:760px){.concept-page-nav{margin:20px 0 24px auto}}
