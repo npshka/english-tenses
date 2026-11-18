@@ -229,3 +229,36 @@
 .simple-visual.repeated-events .event-flag{top:12px}
 .simple-pattern-note{margin:10px 0 0;padding-top:10px;border-top:1px solid #e9e7e2;color:#85818b;font-size:9px;line-height:1.55}
 @media(max-width:760px){.simple-choice button{font-size:8px;padding:9px 5px}.simple-visual{height:54px}}
+
+
+/* Twelve tenses: interactive Active / Passive matrix */
+.tense-table-toolbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:28px 0 16px;padding:17px 19px;border:1px solid #e8e6e1;border-radius:12px;background:#fbfbf8}
+.table-mode-label{font-size:8px;letter-spacing:1.2px;font-weight:800;color:#9189a5}
+.tense-table-toolbar p{margin:5px 0 0;color:#85818b;font-size:10px;line-height:1.5}
+.voice-switch{display:flex;gap:4px;padding:4px;border-radius:9px;background:#efeee9;flex:none}
+.voice-switch button{border:0;border-radius:6px;padding:10px 14px;background:transparent;color:#85818b;font:700 10px Manrope,sans-serif;cursor:pointer;transition:background .2s,color .2s,box-shadow .2s}
+.voice-switch button.active{background:#fff;color:#62558e;box-shadow:0 2px 7px #26233312}
+.tense-table-wrap{width:100%;overflow-x:auto;border:1px solid #e8e6e1;border-radius:13px;background:#fbfbf8}
+.tense-matrix{width:100%;min-width:1180px;border-collapse:separate;border-spacing:0;table-layout:fixed}
+.tense-matrix thead th{padding:15px 13px;background:#eeedf5;color:#71658f;text-align:left;font:800 9px Manrope,sans-serif;letter-spacing:.8px;border-bottom:1px solid #e3dfeb}
+.tense-matrix thead th:first-child{width:105px;border-radius:12px 0 0 0}
+.tense-matrix thead th:last-child{border-radius:0 12px 0 0}
+.tense-matrix tbody th,.tense-matrix tbody td{vertical-align:top;border-bottom:1px solid #eae8e3;border-right:1px solid #eeece7}
+.tense-matrix tbody tr:last-child th,.tense-matrix tbody tr:last-child td{border-bottom:0}
+.tense-matrix tbody td:last-child{border-right:0}
+.tense-matrix tbody th.period-heading{padding:20px 12px;background:#f2f1ec;text-align:left}
+.period-heading strong{display:block;color:#51466f;font:800 14px Manrope}
+.period-heading span{display:block;margin-top:5px;color:#99949e;font-size:9px}
+.matrix-cell{min-height:315px;padding:16px 13px;display:flex;flex-direction:column;align-items:flex-start;gap:0}
+.matrix-cell h3{min-height:34px;margin:0 0 14px;color:#302d3b;font:700 13px/1.35 Manrope,sans-serif;letter-spacing:-.2px}
+.matrix-label{margin:0 0 6px;color:#9a93a7;font-size:7px;letter-spacing:1px;font-weight:800}
+.matrix-formula{display:block;min-height:42px;margin:0 0 13px;color:#615486;font:800 12px/1.5 Manrope,sans-serif;overflow-wrap:anywhere}
+.matrix-caution{display:block;margin:-7px 0 12px;padding:7px 8px;border-radius:6px;background:#f5efe2;color:#927b4c;font-size:8px;line-height:1.45}
+.matrix-markers{min-height:38px;margin:0 0 13px;color:#77737e;font-size:9px;line-height:1.5}
+.matrix-example{display:block;margin:0 0 5px;color:#4e5f50;font-size:10px;line-height:1.55;font-weight:700;overflow-wrap:anywhere}
+.matrix-translation{display:block;margin:0 0 12px;color:#99949e;font-size:8px;line-height:1.45}
+.matrix-detail{margin:auto 0 10px;padding-top:9px;border-top:1px solid #eeece7;color:#85818b;font-size:8px;line-height:1.5}
+.matrix-more{padding:0;border:0;background:transparent;color:#7869a6;font-size:8px;font-weight:800;cursor:pointer}
+.matrix-more span{margin-left:3px}
+.matrix-footnote{margin:12px 2px 24px;color:#918c98;font-size:9px;line-height:1.65}
+@media(max-width:760px){.tense-table-toolbar{align-items:flex-start;flex-direction:column;padding:15px}.voice-switch{width:100%}.voice-switch button{flex:1;padding:10px 8px}.tense-matrix{min-width:1120px}}
