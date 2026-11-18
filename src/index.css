@@ -184,3 +184,11 @@
   .formula-legend { gap: 12px; margin-bottom: 11px; }
   .formula-legend span { font-size: 11px; }
 }
+
+.passive-unavailable-note {
+  display: block;
+  margin-top: 9px;
+  color: #8b8495;
+  font-size: 11px;
+  line-height: 1.5;
+}
