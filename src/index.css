@@ -190,3 +190,13 @@
   font-size: 11px;
   line-height: 1.5;
 }
+
+.perfect-rule{font-size:10px;line-height:1.7;color:#777380;margin:17px 0 12px;max-width:390px}
+.perfect-time-forms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:14px}
+.perfect-time-forms>div{min-width:0;padding:10px 8px;border-radius:8px;background:#e5e0f1;display:flex;flex-direction:column;gap:5px}
+.perfect-time-forms small{margin:0;color:#8579a2;font-size:8px;font-weight:700;letter-spacing:.6px}
+.perfect-time-forms strong{font:800 13px Manrope;color:#5f5189;white-space:nowrap}
+.perfect-time-forms span{font-size:8px;line-height:1.4;color:#898197}
+.perfect-structure{font-size:9px;line-height:1.8;color:#777380;margin:14px 0 0}
+.perfect-structure b{color:#51466f}
+@media(max-width:760px){.perfect-time-forms{gap:6px}.perfect-time-forms>div{padding:9px 6px}.perfect-time-forms strong{font-size:11px}}
